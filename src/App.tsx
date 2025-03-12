@@ -1,24 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import styled from "styled-components";
+import { RefreshIcon } from "./assets/svg/RefreshIcon";
+import { AlertIcon } from "./assets/svg/AlertIcon";
+import axios from "axios";
+import { MatchInfo } from "./components/MatchInfo";
 
 function App() {
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(false);
+
+  const getData = async () => {
+    await axios
+      .get("https://app.ftoyd.com/fronttemp-service/fronttemp")
+      .then((response) => {
+        if (response.data.ok) {
+          setData(response.data.data.matches);
+          setError(false);
+        } else {
+          setError(true);
+        }
+      });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="Header">
+        <h1 className="AppHeader"> Match Traker</h1>
+        <div className="RefreshContainer">
+          {error ? (
+            <div className="ErrorContainer">
+              <AlertIcon />
+              <span className="ErrorText">
+                Ошибка: не удалось загрузить информацию
+              </span>
+            </div>
+          ) : (
+            <></>
+          )}
+          <button className="HeaderButton" onClick={getData}>
+            <span className="ButtonText">Обновить</span>
+            <RefreshIcon />
+          </button>
+        </div>
+      </div>
+      {data.map((item,index) => (
+        <MatchInfo item={item} key={item+index}/>
+      ))}
     </div>
   );
 }

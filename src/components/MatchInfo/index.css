@@ -1,0 +1,39 @@
+.Sections {
+    height: 87px;
+    border-radius: 4px;
+    background-color: rgba(11, 14, 18, 1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 0 20px;
+    margin-top: 10px;
+  }
+  
+  .Main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .HomeTeamName { color: white; padding-left: 15px }
+
+  .Score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .AwayTeamName {
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .Button { background-color: transparent; border: 0px }
+
+  .Status {
+    color: white;
+    width: 92px;
+    text-align: center
+  }
